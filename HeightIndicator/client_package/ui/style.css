@@ -1,9 +1,32 @@
 #height {
-    top: 75%;
-    left: 87.5%;
+    top: 100%;
+    border-top: 2px solid red;
     position: absolute;
-    transform: rotate(-90deg);
-    width: 17.5%;
+    width: 100%;
+}
+
+#heightBlock {
+    top: 52.5%;
+    height: 40%;
+    left: 95%;
+    position: absolute;
+    /*width: 1.5%;*/
+    width: 1%;
+    border-top: 3px solid black;
+    border-bottom: 3px solid black;
+    opacity: 1;
+}
+
+#centerLine {
+    /*left: 50%;*/
+    left: 100%;
+    opacity: 1;
+    position: absolute;
+    width: 1%;
+    border-left: 3px solid black;
+    
+    border-top: 3px solid black;
+    height: 100%;
 }
 
 #digital {
