@@ -1,0 +1,24 @@
+#height {
+    top: 75%;
+    left: 87.5%;
+    position: absolute;
+    transform: rotate(-90deg);
+    width: 17.5%;
+}
+
+#digital {
+    font-family: Arial;
+    color: red;
+    position: absolute;
+    top: 95%;
+    left: 94%;
+    font-size: 150%;
+}
+
+#advice {
+    font-family: Arial;
+    color: orange;
+    position: absolute;
+    top: 87%;
+    left: 91%;
+}
