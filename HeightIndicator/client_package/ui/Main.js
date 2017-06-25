@@ -1,11 +1,14 @@
 function Main() {
     
     this.h = document.getElementById("height");
+    this.b = document.getElementById("heightBlock");
+    this.c = document.getElementById("centerLine");
     this.d = document.getElementById("digital");
     this.a = document.getElementById("advice");
     this.interval = null;
     this.height = 1024;
     this.hidden = false;
+    this.color = false;
     
     this.main = function() {
         this.interval = setInterval(this.getHeight, 100);
@@ -14,7 +17,15 @@ function Main() {
         window.onkeydown = function(e) {
             if(e.which == 45 /*INSERT*/) {
                 var main = window.__MAIN;
-                main.toggle();
+                if(main.hidden || main.color == "black") {
+                    main.toggle();
+                } else if(main.color == "white") {
+                    main.setColor("black");
+                }
+                main.b.style.borderTop =
+                main.b.style.borderBottom = 
+                main.c.style.borderLeft = 
+                main.c.style.borderTop = "3px solid " + main.color;
             }
         }
         
@@ -24,17 +35,27 @@ function Main() {
         jcmp.AddEvent("HeightIndicator_OnReturn", this.updateHeight);
     }
     
+    this.setColor = function(color) {
+        var main = window.__MAIN;
+        main.color = color;
+        main.b.style.borderTop =
+        main.b.style.borderBottom = 
+        main.c.style.borderLeft = 
+        main.c.style.borderTop = "3px solid " + main.color;
+    }
+    
     this.show = function() {
         var main = window.__MAIN;
         main.hidden = false;
-        main.h.style.display = main.d.style.display = "";
+        main.b.style.display = main.d.style.display = "";
         document.body.removeChild(main.a);
     }
     
     this.hide = function() {
         var main = window.__MAIN;
         main.hidden = true;
-        main.h.style.display = main.d.style.display = "none";
+        main.b.style.display = main.d.style.display = "none";
+        main.setColor("white");
     }
     
     this.toggle = function() {
@@ -62,7 +83,8 @@ function Main() {
         
         var bottom = 0, top = max - min, h = height - min;
         
-        return Math.floor(h / top * 100);
+        //return Math.floor(h / top * 100);
+        return parseFloat((h / top * 100).toFixed(2));
     }
     
     this.updateHeight = function(height) {
@@ -70,6 +92,6 @@ function Main() {
         main.height = height;
         
         main.d.innerHTML = Math.floor(height - 1024) + " M";
-        main.h.value = main.countHeightPercent(height);
+        main.h.style.top = (100 - main.countHeightPercent(height)).toString() + "%";
     }
 }
