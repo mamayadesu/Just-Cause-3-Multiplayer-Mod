@@ -13,7 +13,7 @@ function Main() {
     this.main = function() {
         this.interval = setInterval(this.getHeight, 100);
         this.hide();
-        
+        this.setColor("white");
         window.onkeydown = function(e) {
             if(e.which == 45 /*INSERT*/) {
                 var main = window.__MAIN;
@@ -55,7 +55,6 @@ function Main() {
         var main = window.__MAIN;
         main.hidden = true;
         main.b.style.display = main.d.style.display = "none";
-        main.setColor("white");
     }
     
     this.toggle = function() {
@@ -64,6 +63,7 @@ function Main() {
             main.show();
         } else {
             main.hide();
+            main.setColor("white");
         }
     }
     
