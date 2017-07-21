@@ -1,0 +1,11 @@
+{
+    "author": "MamayAdesu",
+    "description": "",
+    "jcmp_dependencies": [
+        "chat"
+    ],
+    "license": "MIT",
+    "main": "main.js",
+    "name": "inGameMusicUI",
+    "version": "1.0.0"
+}
