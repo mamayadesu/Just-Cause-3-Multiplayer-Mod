@@ -90,6 +90,7 @@ function Main() {
     
     this.updateHeight = function(height) {
         var main = window.__MAIN;
+        height = parseFloat(height);
         main.height = height;
         
         main.d.innerHTML = Math.floor(height - 1024) + " M";
