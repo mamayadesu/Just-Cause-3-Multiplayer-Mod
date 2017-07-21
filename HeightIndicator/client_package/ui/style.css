@@ -36,6 +36,7 @@
     top: 95%;
     left: 94%;
     font-size: 150%;
+    -webkit-user-select: none;
 }
 
 #advice {
