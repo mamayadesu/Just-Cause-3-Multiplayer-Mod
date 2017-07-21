@@ -1,0 +1,80 @@
+/* This code was stolen from spawn-menu plugin. Sorry x) */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Montserrat-Regular'), url('fonts/montserrat-regular.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Montserrat-Bold'), url('fonts/montserrat-bold.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+body {
+    -webkit-user-select: none;
+}
+
+#settings {
+    float: left;
+    
+    width: 20%;
+    /*height: 25%;*/
+    height: 15%;
+    
+    background-color: #263240;
+    border-radius: 5px;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    padding-top: 15px;
+    padding-left: 15px;
+    top: 45%;
+    position: absolute;
+}
+
+#reload {
+    padding: 10px 10px 10px 10px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    border-color: green;
+    font-size: 120%;
+}
+
+#loading {
+    text-shadow: black 2px 2px 2px;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    top: 60%;
+    position: absolute;
+}
+
+#log_button {
+    padding: 5px 5px 5px 5px;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    border-color: blue;
+}
+
+#reload:hover { 
+    background-color: #009933;
+    color: white;
+}
+
+#reload:active {
+    background-color: #009933;
+    color: #bfbfbf;
+}
+
+#reloaded {
+    color: green;
+}
+
+#volume {
+    width: 95%;
+}
