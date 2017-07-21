@@ -72,6 +72,7 @@ function Main() {
     }
     
     this.countHeightPercent = function(height) {
+        height = parseFloat(height);
         height = Math.floor(height);
         var min = 1024, max = 6000;
         
