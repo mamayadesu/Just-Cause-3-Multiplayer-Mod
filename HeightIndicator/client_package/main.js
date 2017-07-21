@@ -2,8 +2,7 @@ const heightindicator_ui = new WebUIWindow("heightindicator_ui", "package://Heig
 heightindicator_ui.autoResize = true;
 
 jcmp.ui.AddEvent("HeightIndicator_GetHeight", () => {
-    var pos = jcmp.localPlayer.position;
-    jcmp.ui.CallEvent("HeightIndicator_OnReturn", pos.y);
+    jcmp.ui.CallEvent("HeightIndicator_OnReturn", jcmp.localPlayer.position.y);
 });
 
 jcmp.events.AddRemoteCallable("HeightIndicator_PlayerVehicleEntered", () => {
