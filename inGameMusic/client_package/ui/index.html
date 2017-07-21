@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>InGameMusic</title>
+    </head>
+    <body>
+        <div id="debug"></div>
+        <script type="text/javascript" src="debug.js"></script>
+        <div id="audio">
+            <audio src="music/death.ogg" id="death"></audio>
+            <audio src="music/helicopter.ogg" id="helicopter"></audio>
+            <audio src="music/plane.ogg" id="plane"></audio>
+            <audio src="music/car.ogg" id="car"></audio>
+            <audio src="music/bike.ogg" id="bike"></audio>
+            <audio src="music/boat.ogg" id="boat"></audio>
+        </div>
+        <div id="settings">
+            In-vehicle music settings<br><br>
+            Volume (<span id="volume_info">100</span>%)<br>
+            <input type="range" id="volume" value="100">
+            <br>
+            <div id="reload_block" style="display: none;">
+            <!-- Is useless anymore -->
+            If the music lags or can't playing,<br>try to press "Reload".<br><br>
+            <input type="button" id="reload" value="Reload"><br>
+            <div id="reloaded">
+            Reloaded! Now exit and enter vehicle again.
+            </div>
+            </div>
+            <div id="debug_tools" style="display: none;">
+                <input type="button" id="log_button" value="Hide log"><br>
+                <b id="time"></b>
+            </div>
+        </div>
+        <div id="loading">
+            <!-- Is useless anymore -->
+            The in-vehicle sound will play soon.<br>
+            Please wait a few seconds.<br>
+            You can press "M" or "V" to open in-vehicle music settings.
+        </div>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" src="jquery-3.1.0.min.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="events.js"></script>
+    </body>
+</html>
