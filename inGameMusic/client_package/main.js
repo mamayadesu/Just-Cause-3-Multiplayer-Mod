@@ -7,6 +7,10 @@ igm_ui.autoResize = true;
     igm_ui.Reload(true);
 });*/
 
+jcmp.events.Add('ScriptError', (file, line, error, stringtrace) => {
+    jcmp.ui.CallEvent("inGameMusic_CPERROR", file, line, error, stringtrace);
+});
+
 jcmp.events.AddRemoteCallable("inGameMusic_toggleSettings", toggle => {
     // ToDo: make check
     jcmp.ui.CallEvent("inGameMusic_toggleSettings");
@@ -75,4 +79,14 @@ jcmp.events.AddRemoteCallable("inGameMusic_fv_start", (vi, ct) => {
 });
 jcmp.events.AddRemoteCallable("inGameMusic_fv_stop", (vi) => {
     jcmp.ui.CallEvent('inGameMusic_fv_stop', vi);
+});
+
+jcmp.events.AddRemoteCallable("inGameMusic_wingsuit_start", (ct) => {
+    jcmp.ui.CallEvent('inGameMusic_wingsuit_start', ct);
+});
+jcmp.events.AddRemoteCallable("inGameMusic_wingsuit_stop", () => {
+    jcmp.ui.CallEvent('inGameMusic_wingsuit_stop');
+});
+jcmp.events.AddRemoteCallable("inGameMusic_GetPlayerStateBits", () => {
+    jcmp.events.CallRemote("inGameMusic_OnReturnPlayerStateBits", jcmp.localPlayer.playerStateBits1, jcmp.localPlayer.playerStateBits2);
 });
