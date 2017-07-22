@@ -53,6 +53,34 @@ var synchronization = setInterval(function() {
     }
 }, 1000);
 
+jcmp.events.AddRemoteCallable("inGameMusic_OnReturnPlayerStateBits", (player, playerStateBits1, playerStateBits2) => {
+    if((playerStateBits1 == 1 || playerStateBits1 == 9) && playerStateBits2 == 0 && ! player.__INGAMEMUSIC__doesUseWingsuit) {
+        player.__INGAMEMUSIC__doesUseWingsuit = true;
+        var ct = 0;
+        if(defaultVehicles["wingsuit"].startAtRandomPosition == true) {
+            ct = rand(0, defaultVehicles["wingsuit"].duration);
+        }
+        if(defaultVehicles["wingsuit"].synchronization == true) {
+            ct = synchronizeAudiofilesDef["wingsuit"].currentTime;
+        }
+        jcmp.events.CallRemote("inGameMusic_wingsuit_start", ct);
+    }
+    if(((playerStateBits1 != 1 && playerStateBits1 != 9) || playerStateBits2 != 0) && player.__INGAMEMUSIC__doesUseWingsuit == true) {
+        player.__INGAMEMUSIC__doesUseWingsuit = false;
+        jcmp.events.CallRemote('inGameMusic_wingsuit_stop');
+    }
+});
+
+jcmp.events.Add("PlayerReady", (player) => {
+    player.__INGAMEMUSIC__wingsuitChecker = setInterval(function() {
+        jcmp.events.CallRemote("inGameMusic_GetPlayerStateBits", player);
+    }, 1000, player);
+});
+
+jcmp.events.Add("PlayerDestroyed", (player) => {
+    clearInterval(player.__INGAMEMUSIC__wingsuitChecker);
+});
+
 jcmp.events.Add("PlayerVehicleEntered", (player, vehicle, seat) => {
     var vehicles = getVehicles();
     var v = findMyVehicle(vehicle);
@@ -153,3 +181,12 @@ jcmp.events.Add("PlayerVehicleExited", (player, vehicle, seat) => {
 jcmp.events.Add("PlayerDeath", (player, killer, reason) => {
     jcmp.events.CallRemote("inGameMusic_deathui", player);
 });
+
+function rand(min, max) {
+    if(min == undefined || max == undefined) {
+        return null;
+    }
+    min = parseInt(min, 10)
+    max = parseInt(max, 10)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
