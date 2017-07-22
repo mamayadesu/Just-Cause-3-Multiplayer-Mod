@@ -115,6 +115,7 @@
         }
         
         window.isSettingsWindowVisible = false;
+        window.wingsuitTimeout = null;
         //document.getElementById("reload_block").style.display = "none";
         //document.getElementById("reloaded").style.display = "none";
         document.getElementById("settings").style.display = "none";
@@ -238,6 +239,16 @@
             window.__IGM__debugLog("Failed to load boat music. "+JSON.stringify(e));
         }
         
+        try {
+            window.__IGM__debugLog("Loading wingsuit music...");
+            document.getElementById("wingsuit").onload = function() {
+                window.__IGM__debugLog("Wingsuit music loaded!");
+            }
+            document.getElementById("wingsuit").load();
+        } catch(e) {
+            window.__IGM__debugLog("Failed to load wingsuit music. "+JSON.stringify(e));
+        }
+        
         window.lve = function() {
             var audio = document.getElementById("audio");
             var newEl;
@@ -271,6 +282,10 @@
             max = parseInt(max, 10)
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
+        
+        jcmp.AddEvent('inGameMusic_CPERROR', function(file, line, error, stringtrace) {
+            window._EVENTS.inGameMusic_CPERROR(file, line, error, stringtrace);
+        });
         
         jcmp.AddEvent('inGameMusic_PlayerVehicleEntered', function(vehicleData) {
             window._EVENTS.inGameMusic_PlayerVehicleEntered(vehicleData);
@@ -329,6 +344,25 @@
         });
         jcmp.AddEvent('inGameMusic_inboatui_stop', function() {
             window._EVENTS.inGameMusic_inboatui_stop();
+        });
+        
+        
+        
+        jcmp.AddEvent('inGameMusic_wingsuit_start', function(ct) {
+            if(window.wingsuitTimeout != null) {
+                clearTimeout(window.wingsuitTimeout);
+                window.wingsuitTimeout = null;
+                window.__IGM__debugLog("Wingsuit was opened. Abort stopping.");
+                return;
+            }
+            window._EVENTS.inGameMusic_wingsuit_start(ct);
+        });
+        jcmp.AddEvent('inGameMusic_wingsuit_stop', function() {
+            window.__IGM__debugLog("Wingsuit was closed. If it won't be opened in 5 seconds, the music will be stopped.");
+            window.wingsuitTimeout = setTimeout(function() {
+                window._EVENTS.inGameMusic_wingsuit_stop();
+                window.wingsuitTimeout = null;
+            }, 5000);
         });
         
         
