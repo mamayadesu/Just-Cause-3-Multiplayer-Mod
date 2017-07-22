@@ -12,3 +12,13 @@ jcmp.events.AddRemoteCallable("HeightIndicator_PlayerVehicleEntered", () => {
 jcmp.events.AddRemoteCallable("HeightIndicator_PlayerVehicleExited", () => {
     jcmp.ui.CallEvent('HeightIndicator_PlayerVehicleExited');
 });
+
+jcmp.events.AddRemoteCallable("HeightIndicator_WingsuitOpened", (ct) => {
+    jcmp.ui.CallEvent('HeightIndicator_WingsuitOpened', ct);
+});
+jcmp.events.AddRemoteCallable("HeightIndicator_WingsuitClosed", () => {
+    jcmp.ui.CallEvent('HeightIndicator_WingsuitClosed');
+});
+jcmp.events.AddRemoteCallable("HeightIndicator_GetPlayerStateBits", () => {
+    jcmp.events.CallRemote("HeightIndicator_OnReturnPlayerStateBits", jcmp.localPlayer.playerStateBits1, jcmp.localPlayer.playerStateBits2);
+});
