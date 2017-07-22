@@ -1,4 +1,8 @@
 window._EVENTS = {
+    "inGameMusic_CPERROR": function(file, line, error, stringtrace) {
+        window.__IGM__debugLog("CPERROR \""+error+"\" in \""+file+"\" on line "+line+" (stringtrace: \""+stringtrace+"\").");
+    },
+    
     // Is useless anymore
     "inGameMusic_PlayerVehicleEntered": function(vehicleData) {
         //document.getElementById("reload_block").style.display = "";
@@ -313,6 +317,57 @@ window._EVENTS = {
                 document.getElementById("boat").pause();
                 window.nowPlaying = null;
                 window.__IGM__debugLog("Stopped boat music.");
+                clearInterval(window.se);
+                window.se = null;
+                return;
+            }
+            window.nowPlaying.volume -= parseFloat((0.01 / window.te).toFixed(3));
+        }, 10);
+    },
+    
+    
+    
+    "inGameMusic_wingsuit_start": function(ct) {
+        if(isNaN(ct) || ct < 0) {
+            ct = 0;
+        }
+        window.stopNP();
+        window.nowPlaying = document.getElementById("wingsuit");
+        if(window.de.wingsuit.startAtRandomPosition && ! window.de.wingsuit.synchronization) {
+            ct = window.mt_rand(0, window.nowPlaying.duration);
+            window.__IGM__debugLog("Starting wingsuit music at random position ("+ct+"/"+window.nowPlaying.duration+")");
+        } else {
+            window.__IGM__debugLog("Starting wingsuit music at "+ct+" s.");
+        }
+        window.nowPlaying.currentTime = ct;
+        window.__IGM__debugLog("Duration "+window.nowPlaying.duration);
+        window.nowPlaying.volume = window.audioVolume;
+        window.nowPlaying.onended = function() {
+            document.getElementById("wingsuit").currentTime = 0;
+            document.getElementById("wingsuit").play();
+            window.__IGM__debugLog("Wingsuit music ended. Playing again...");
+        }
+        document.getElementById("wingsuit").play();
+        window.loadingText.style.display = "none";
+        window.__IGM__debugLog("Playing wingsuit music...");
+    },
+    "inGameMusic_wingsuit_stop": function() {
+        window.__IGM__debugLog("Stopping wingsuit music...");
+        if(window.nowPlaying == null) {
+            window.__IGM__debugLog("Wingsuit music can't be stopped. Probably, it was reloaded.");
+            return;
+        }
+        if(window.se != null) {
+            clearInterval(window.se);
+        }
+        window.se = setInterval(function() {
+            if(window.nowPlaying.id != "wingsuit" && window.nowPlaying != null) {
+                window.__IGM__debugLog("Wingsuit music IS NOT playing now! Force stopping...");
+            }
+            if(window.nowPlaying != null && (window.nowPlaying.id != "wingsuit" || window.nowPlaying.volume <= 0.01)) {
+                document.getElementById("wingsuit").pause();
+                window.nowPlaying = null;
+                window.__IGM__debugLog("Stopped wingsuit music.");
                 clearInterval(window.se);
                 window.se = null;
                 return;
