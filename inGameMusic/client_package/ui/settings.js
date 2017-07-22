@@ -98,7 +98,13 @@ module.exports = {
             "startAtRandomPosition" : false,
             "synchronization"       : false,
             "maxDurationForSync"    : 0
-        }
+        },
+        "wingsuit": {
+            "startAtRandomPosition" : false,
+            "synchronization"       : false,
+            "duration"              : 487, // If you want to enable `startAtRandomPosition`, you must to check "wingsuit.ogg", calculate duration and fill it.
+            "maxDurationForSync"    : 0
+        },
     },
     
     timeOfFadeOutAtAnExitFromVehicle: 3,
