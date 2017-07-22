@@ -31,6 +31,8 @@ function Main() {
         
         // Next 2 events works ONLY WITH planes and helicopters. It's ignoring any other vehicles.
         jcmp.AddEvent("HeightIndicator_PlayerVehicleEntered", this.show);
+        jcmp.AddEvent("HeightIndicator_WingsuitOpened", this.show);
+        jcmp.AddEvent("HeightIndicator_WingsuitClosed", this.hide);
         jcmp.AddEvent("HeightIndicator_PlayerVehicleExited", this.hide);
         jcmp.AddEvent("HeightIndicator_OnReturn", this.updateHeight);
     }
