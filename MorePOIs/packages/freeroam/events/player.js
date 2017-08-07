@@ -2,14 +2,14 @@
 
 const util = require('../gm/utility');
 const teleportLocations = require('../gm/defaultTeleports');
-var te = {};
+var te = new Array();
 // *** NOTE: ADDED LINES FROM 7 TO 14 AND FROM 18 TO 19 AND DISABLED LINES FROM 15 TO 17.
 for(var k in teleportLocations) {
     if(! teleportLocations[k].notForRandomSpawn) {
         console.log("Adding location "+teleportLocations[k].command);
-        te[te.length] = teleportLocations[k];
+        te.push(new Vector3f(teleportLocations[k].position.x, teleportLocations[k].position.y + 400, teleportLocations[k].position.z));
     } else {
-        console.log("Ignore location "+teleportLocations[k].command);
+        console.log("Ignoring location "+teleportLocations[k].command);
     }
 }
 //const spawnLocations = teleportLocations.map(loc => {
