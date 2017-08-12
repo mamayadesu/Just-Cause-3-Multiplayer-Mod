@@ -1,8 +1,8 @@
 const vbomb = new WebUIWindow("vehiclebomb_ui", "package://VBomb/ui/index.html", new Vector2(jcmp.viewportSize.x, jcmp.viewportSize.y));
 vbomb.autoResize = true;
 
-jcmp.events.AddRemoteCallable("VehicleBomb_Timer", () => {
-    jcmp.ui.CallEvent("VehicleBomb_Timer");
+jcmp.events.AddRemoteCallable("VehicleBomb_Timer", (left) => {
+    jcmp.ui.CallEvent("VehicleBomb_Timer", left);
 });
 
 jcmp.events.AddRemoteCallable("VehicleBomb_Detonate", () => {

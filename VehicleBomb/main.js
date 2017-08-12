@@ -13,7 +13,7 @@ jcmp.events.Add("PlayerVehicleEntered", (player, v, seat) => {
             if(v.toDetonateAfterAnEntrance) {
                 detonate(v);
             } else if(v.useTimer) {
-                jcmp.events.CallRemote("VehicleBomb_Timer", player);
+                //jcmp.events.CallRemote("VehicleBomb_Timer", player, player.vehicle.explosionTime - (new Date).getTime());
             }
         }
     }, 500, player, v, seat);
@@ -44,6 +44,9 @@ jcmp.events.AddRemoteCallable("VehicleBomb_TryToFindBomb", (player) => {
         if(rand(0, 100) > 25 && player.vehicle && player.vehicle.vehicleArmed) {
             if(player.vehicle) {
                 jcmp.events.CallRemote("VehicleBomb_BombHasBeenFound", player);
+                if(player.vehicle.useTimer && player.vehicle.playerDetonator.networkId != player.networkId) {
+                    jcmp.events.CallRemote("VehicleBomb_Timer", player, player.vehicle.explosionTime - (new Date).getTime());
+                }
             }
         } else {
             jcmp.events.CallRemote("VehicleBomb_BombHasNotBeenFound", player);
@@ -82,6 +85,7 @@ jcmp.events.AddRemoteCallable("VehicleBomb_DefuseHasBeenFailed", (player) => {
     detonate(player.vehicle);
     
     jcmp.events.CallRemote("VehicleBomb_StopTimer", player.vehicle.playerDetonator);
+    jcmp.events.CallRemote("VehicleBomb_StopTimer", player);
 });
 
 jcmp.events.AddRemoteCallable("VehicleBomb_BombHasBeenDefused", (player) => {
@@ -92,6 +96,7 @@ jcmp.events.AddRemoteCallable("VehicleBomb_BombHasBeenDefused", (player) => {
     defuse(player.vehicle);
     
     jcmp.events.CallRemote("VehicleBomb_StopTimer", player.vehicle.playerDetonator);
+    jcmp.events.CallRemote("VehicleBomb_StopTimer", player);
 });
 
 jcmp.events.AddRemoteCallable("VehicleBomb_SetBomb", (player, data) => {

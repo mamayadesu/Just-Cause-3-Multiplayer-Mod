@@ -4,6 +4,8 @@ function Main() {
         this.countedTime = 0;
         this.timeUntil = 0;
         this.isInVehicle = false;
+        this.isTimerStarted = false;
+        this.isTickingEnabled = false;
         this.isLookingForBomb = false;
         this.detonatedByFailedDefuse = false;
         this.left = 0;
@@ -236,7 +238,11 @@ function Main() {
             window.__MAIN.isInVehicle = true;
         });
         jcmp.AddEvent("VehicleBomb_PlayerVehicleExited", function() {
-            window.__MAIN.isInVehicle = false;
+            var main = window.__MAIN;
+            main.isInVehicle = false;
+            if(main.isTickingEnabled == false) {
+                main.stopTimer();
+            }
         });
         
         jcmp.AddEvent("VehicleBomb_OpenOk", function() {
@@ -330,18 +336,11 @@ function Main() {
         
         jcmp.AddEvent("VehicleBomb_StopTimer", function() {
             var main = window.__MAIN;
-            clearInterval(main.timer.interval);
-            main.timer.interval = null;
-            main.timer.style.display = "none";
-            main.timer.style.color = "white";
-            main.timer.innerHTML = "00:00.00";
-            
-            clearInterval(main.tick.interval);
-            main.tick.interval = null;
+            main.stopTimer();
         });
         
-        jcmp.AddEvent("VehicleBomb_Timer", function() {
-            window.__MAIN.playTick();
+        jcmp.AddEvent("VehicleBomb_Timer", function(left) {
+            window.__MAIN.startTimer(left);
         });
         jcmp.AddEvent("VehicleBomb_Detonate", function() {
             window.__MAIN.detonate();
@@ -469,25 +468,32 @@ function Main() {
         main.ce("VehicleBomb_SetBomb", JSON.stringify(main.data));
     }
     
-    this.startTimer = function() {
-        this.timer.style.display = "";
-        this.timeUntil = this.countedTime * 1000 + (new Date).getTime();
-        this.playTick();
-        this.timer.detonateCalled = false;
-        this.timer.interval = setInterval(function() {
+    this.startTimer = function(mseconds) {
+        var main = window.__MAIN;
+        if(main.isTimerStarted) {
+            main.stopTimer();
+        }
+        main.timer.style.display = "";
+        var now = (new Date).getTime();
+        if(typeof mseconds == "undefined") {
+            main.timeUntil = this.countedTime * 1000 + now;
+        } else {
+            main.timeUntil = mseconds + now;
+        }
+        //main.playTick();
+        main.timer.detonateCalled = false;
+        main.isTimerStarted = true;
+        main.timer.interval = setInterval(function() {
             var main = window.__MAIN;
             var now = (new Date).getTime();
             main.left = (main.timeUntil - now) / 1000;
             if(main.left - 1 <= 0 && ! main.timer.detonateCalled) {
+                main.timer.style.color = "red";
                 main.timer.detonateCalled = true;
                 main.detonate();
             }
             if(main.left <= 0) {
-                clearInterval(main.timer.interval);
-                main.timer.interval = null;
-                main.timer.style.display = "none";
-                main.timer.style.color = "white";
-                main.timer.innerHTML = "00:00.00";
+                main.stopTimer();
                 return;
             }
             var days = Math.floor(main.left / 86400);
@@ -504,8 +510,52 @@ function Main() {
             if(s.length == 1) {
                 seconds = "0"+seconds;
             }
+            
+            var sarr = seconds.split(".");
+            sarr[1] = "<span style='font-size: 75%;'>"+sarr[1]+"</span>";
+            seconds = sarr.join(" ");
+            
             main.timer.innerHTML = minutes+":"+seconds;
         }, 10);
+        
+        if(typeof mseconds != "undefined") {
+            return;
+        }
+        
+        main.isTickingEnabled = true;
+        main.tick.currentTime = 0;
+        main.tick.volume = 0.5;
+        main.tick.play();
+        main.tick.interval = setInterval(function() {
+            var main = window.__MAIN;
+            main.timer.style.color = "red";
+            main.tick.onended = function() {
+                if(main.left < 1) {
+                    return;
+                }
+                main.timer.style.color = "white";
+            }
+            main.tick.currentTime = 0;
+            main.tick.play();
+        }, 1000);
+    }
+    
+    this.stopTimer = function() {
+        var main = window.__MAIN;
+        main.isTimerStarted = false;
+        main.isTickingEnabled = false;
+        if(main.timer.interval) {
+            clearInterval(main.timer.interval);
+            main.timer.interval = null;
+            main.timer.style.display = "none";
+            main.timer.style.color = "white";
+            main.timer.innerHTML = "00:00 <span style='font-size: 75%;'>00</span>";
+        }
+        
+        if(main.tick.interval) {
+            clearInterval(main.tick.interval);
+            main.tick.interval = null;
+        }
     }
     
     this.countTime = function() {
@@ -559,23 +609,8 @@ function Main() {
     }
     
     this.playTick = function() {
-        var main = window.__MAIN;
-        main.tick.currentTime = 0;
-        main.tick.volume = 0.5;
-        main.tick.play();
-        main.tick.interval = setInterval(function() {
-            main.timer.style.color = "red";
-            main.tick.onended = function() {
-                var main = window.__MAIN;
-                if(main.left < 1) {
-                    main.timer.style.color = "red";
-                    return;
-                }
-                window.__MAIN.timer.style.color = "white";
-            }
-            main.tick.currentTime = 0;
-            main.tick.play();
-        }, 1000, main);
+        return;
+        // doesn't using since 1.1.0
     }
     
     this.detonate = function() {
