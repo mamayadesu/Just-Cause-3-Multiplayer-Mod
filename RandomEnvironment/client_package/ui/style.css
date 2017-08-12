@@ -1,0 +1,8 @@
+.time {
+    color: #DDDDDD;
+    left: 25px;
+    bottom: 18px;
+    font-size: 150%;
+    position: absolute;
+    -webkit-user-select: none;
+}
