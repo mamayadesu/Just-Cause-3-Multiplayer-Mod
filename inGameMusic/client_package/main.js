@@ -31,8 +31,8 @@ jcmp.events.AddRemoteCallable("inGameMusic_PlayerVehicleExited", () => {
     jcmp.ui.CallEvent('inGameMusic_PlayerVehicleExited');
 });
 
-jcmp.events.AddRemoteCallable("inGameMusic_inhelicopterui_start", (ct) => {
-    jcmp.ui.CallEvent('inGameMusic_inhelicopterui_start', ct);
+jcmp.events.AddRemoteCallable("inGameMusic_inhelicopterui_start", (ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_inhelicopterui_start', ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_inhelicopterui_stop", () => {
     jcmp.ui.CallEvent('inGameMusic_inhelicopterui_stop');
@@ -40,8 +40,8 @@ jcmp.events.AddRemoteCallable("inGameMusic_inhelicopterui_stop", () => {
 
 
 
-jcmp.events.AddRemoteCallable("inGameMusic_inplaneui_start", (ct) => {
-    jcmp.ui.CallEvent('inGameMusic_inplaneui_start', ct);
+jcmp.events.AddRemoteCallable("inGameMusic_inplaneui_start", (ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_inplaneui_start', ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_inplaneui_stop", () => {
     jcmp.ui.CallEvent('inGameMusic_inplaneui_stop');
@@ -49,8 +49,8 @@ jcmp.events.AddRemoteCallable("inGameMusic_inplaneui_stop", () => {
 
 
 
-jcmp.events.AddRemoteCallable("inGameMusic_incarui_start", (ct) => {
-    jcmp.ui.CallEvent('inGameMusic_incarui_start', ct);
+jcmp.events.AddRemoteCallable("inGameMusic_incarui_start", (ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_incarui_start', ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_incarui_stop", () => {
     jcmp.ui.CallEvent('inGameMusic_incarui_stop');
@@ -58,8 +58,8 @@ jcmp.events.AddRemoteCallable("inGameMusic_incarui_stop", () => {
 
 
 
-jcmp.events.AddRemoteCallable("inGameMusic_onbikeui_start", (ct) => {
-    jcmp.ui.CallEvent('inGameMusic_onbikeui_start', ct);
+jcmp.events.AddRemoteCallable("inGameMusic_onbikeui_start", (ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_onbikeui_start', ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_onbikeui_stop", () => {
     jcmp.ui.CallEvent('inGameMusic_onbikeui_stop');
@@ -67,22 +67,22 @@ jcmp.events.AddRemoteCallable("inGameMusic_onbikeui_stop", () => {
 
 
 
-jcmp.events.AddRemoteCallable("inGameMusic_inboatui_start", (ct) => {
-    jcmp.ui.CallEvent('inGameMusic_inboatui_start', ct);
+jcmp.events.AddRemoteCallable("inGameMusic_inboatui_start", (ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_inboatui_start', ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_inboatui_stop", () => {
     jcmp.ui.CallEvent('inGameMusic_inboatui_stop');
 });
 
-jcmp.events.AddRemoteCallable("inGameMusic_fv_start", (vi, ct) => {
-    jcmp.ui.CallEvent('inGameMusic_fv_start', vi, ct);
+jcmp.events.AddRemoteCallable("inGameMusic_fv_start", (vi, ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_fv_start', vi, ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_fv_stop", (vi) => {
     jcmp.ui.CallEvent('inGameMusic_fv_stop', vi);
 });
 
-jcmp.events.AddRemoteCallable("inGameMusic_wingsuit_start", (ct) => {
-    jcmp.ui.CallEvent('inGameMusic_wingsuit_start', ct);
+jcmp.events.AddRemoteCallable("inGameMusic_wingsuit_start", (ct, part) => {
+    jcmp.ui.CallEvent('inGameMusic_wingsuit_start', ct, part);
 });
 jcmp.events.AddRemoteCallable("inGameMusic_wingsuit_stop", () => {
     jcmp.ui.CallEvent('inGameMusic_wingsuit_stop');

@@ -16,6 +16,7 @@
                 window.audioVolume = parseFloat((window.defvol / 100).toFixed(2));
                 document.getElementById("volume").value = document.getElementById("volume_info").innerHTML = window.defvol;
                 window.lve();
+                window.lp();
             }
         });
         
@@ -274,12 +275,86 @@
             }
         }
         
+        window.lp = function() {
+            var audio = document.getElementById("audio");
+            var newEl;
+            var filename;
+            var filename1, filename2;
+            var f;
+            for(var i in window.ve) {
+                for(var k in window.ve[i].parts) {
+                    if(k == 0) {
+                        continue;
+                    }
+                    filename1 = filename2 = [];
+                    newEl = document.createElement("audio");
+                    audio.appendChild(newEl);
+                    filename = window.ve[i].filename;
+                    filename1 = filename.split(".");
+                    for(var a in filename1) {
+                        if(a != filename1.length - 1) {
+                            filename2[a] = filename1[a];
+                        }
+                    }
+                    f = filename2.join(".");
+                    f = f+"_"+k;
+                    filename = f+"."+filename1[1];
+                    newEl.setAttribute("src", "music/"+filename);
+                    newEl.setAttribute("id", f);
+                    try {
+                        window.__IGM__debugLog("Loading part "+k+" for \""+i+"\" (Filename \"music/"+filename+"\")...");
+                        newEl.onload = function() {
+                            window.__IGM__debugLog("Part "+k+" for \""+i+"\" loaded!");
+                        }
+                        newEl.load();
+                    } catch(e) {
+                        window.__IGM__debugLog("Failed to load part "+k+" for \""+i+"\". "+JSON.stringify(e));
+                    }
+                }
+            }
+            
+            for(var i in window.de) {
+                if(i == "death") {
+                    continue;
+                }
+                for(var k in window.de[i].parts) {
+                    if(k == 0) {
+                        continue;
+                    }
+                    filename1 = filename2 = [];
+                    newEl = document.createElement("audio");
+                    audio.appendChild(newEl);
+                    filename = i+".ogg";
+                    filename1 = filename.split(".");
+                    for(var a in filename1) {
+                        if(a != filename1.length - 1) {
+                            filename2[a] = filename1[a];
+                        }
+                    }
+                    f = filename2.join(".");
+                    f = f+"_"+k;
+                    filename = f+"."+filename1[1];
+                    newEl.setAttribute("src", "music/"+filename);
+                    newEl.setAttribute("id", f);
+                    try {
+                        window.__IGM__debugLog("Loading part "+k+" for def.vehicle "+i+" (Filename \"music/"+filename+"\")...");
+                        newEl.onload = function() {
+                            window.__IGM__debugLog("Part "+k+" for def.vehicle "+i+" loaded!");
+                        }
+                        newEl.load();
+                    } catch(e) {
+                        window.__IGM__debugLog("Failed to load part "+k+" def.vehicle "+i+". "+JSON.stringify(e));
+                    }
+                }
+            }
+        }
+        
         window.mt_rand = function(min, max) {
             if(min == undefined || max == undefined) {
                 return null;
             }
-            min = parseInt(min, 10)
-            max = parseInt(max, 10)
+            min = parseInt(min, 10);
+            max = parseInt(max, 10);
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         
@@ -303,8 +378,8 @@
             window._EVENTS.inGameMusic_deathui_stop();
         });
         
-        jcmp.AddEvent('inGameMusic_inhelicopterui_start', function(ct) {
-            window._EVENTS.inGameMusic_inhelicopterui_start(ct);
+        jcmp.AddEvent('inGameMusic_inhelicopterui_start', function(ct, part) {
+            window._EVENTS.inGameMusic_inhelicopterui_start(ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_inhelicopterui_stop', function() {
             window._EVENTS.inGameMusic_inhelicopterui_stop();
@@ -312,8 +387,8 @@
         
         
         
-        jcmp.AddEvent('inGameMusic_inplaneui_start', function(ct) {
-            window._EVENTS.inGameMusic_inplaneui_start(ct);
+        jcmp.AddEvent('inGameMusic_inplaneui_start', function(ct, part) {
+            window._EVENTS.inGameMusic_inplaneui_start(ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_inplaneui_stop', function() {
             window._EVENTS.inGameMusic_inplaneui_stop();
@@ -321,8 +396,8 @@
         
         
         
-        jcmp.AddEvent('inGameMusic_incarui_start', function(ct) {
-            window._EVENTS.inGameMusic_incarui_start(ct);
+        jcmp.AddEvent('inGameMusic_incarui_start', function(ct, part) {
+            window._EVENTS.inGameMusic_incarui_start(ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_incarui_stop', function() {
             window._EVENTS.inGameMusic_incarui_stop();
@@ -330,8 +405,8 @@
         
         
         
-        jcmp.AddEvent('inGameMusic_onbikeui_start', function(ct) {
-            window._EVENTS.inGameMusic_onbikeui_start(ct);
+        jcmp.AddEvent('inGameMusic_onbikeui_start', function(ct, part) {
+            window._EVENTS.inGameMusic_onbikeui_start(ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_onbikeui_stop', function() {
             window._EVENTS.inGameMusic_onbikeui_stop();
@@ -339,8 +414,8 @@
         
         
         
-        jcmp.AddEvent('inGameMusic_inboatui_start', function(ct) {
-            window._EVENTS.inGameMusic_inboatui_start(ct);
+        jcmp.AddEvent('inGameMusic_inboatui_start', function(ct, part) {
+            window._EVENTS.inGameMusic_inboatui_start(ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_inboatui_stop', function() {
             window._EVENTS.inGameMusic_inboatui_stop();
@@ -348,27 +423,30 @@
         
         
         
-        jcmp.AddEvent('inGameMusic_wingsuit_start', function(ct) {
+        jcmp.AddEvent('inGameMusic_wingsuit_start', function(ct, part) {
             if(window.wingsuitTimeout != null) {
                 clearTimeout(window.wingsuitTimeout);
                 window.wingsuitTimeout = null;
                 window.__IGM__debugLog("Wingsuit was opened. Abort stopping.");
                 return;
             }
-            window._EVENTS.inGameMusic_wingsuit_start(ct);
+            window._EVENTS.inGameMusic_wingsuit_start(ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_wingsuit_stop', function() {
             window.__IGM__debugLog("Wingsuit was closed. If it won't be opened in 5 seconds, the music will be stopped.");
             window.wingsuitTimeout = setTimeout(function() {
-                window._EVENTS.inGameMusic_wingsuit_stop();
                 window.wingsuitTimeout = null;
+                if(window.nowPlaying == null || (window.nowPlaying != null && window.nowPlaying.veh != "wingsuit")) {
+                    return;
+                }
+                window._EVENTS.inGameMusic_wingsuit_stop();
             }, 5000);
         });
         
         
         
-        jcmp.AddEvent('inGameMusic_fv_start', function(vi, ct) {
-            window._EVENTS.inGameMusic_fv_start(vi, ct);
+        jcmp.AddEvent('inGameMusic_fv_start', function(vi, ct, part) {
+            window._EVENTS.inGameMusic_fv_start(vi, ct, part, false);
         });
         jcmp.AddEvent('inGameMusic_fv_stop', function(vi) {
             window._EVENTS.inGameMusic_fv_stop(vi);

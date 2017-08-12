@@ -26,43 +26,50 @@ module.exports = {
             "filename"              : "cs7_thunderhawk.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "v4500_plane_solar_smallfloatprop_civilian_01": {
             "filename"              : "stria_ghibli_3.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "v0405_car_mugello_moderncircuitracer_civilian_01": {
             "filename"              : "f1.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "v0403_car_mugello_modernecosuper_civilian_01": {
             "filename"              : "verdeleon_3.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "v0005_car_autostraad_minetruck_commercial_01": {
             "filename"              : "belaz.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "v0803_car_na_monstertruck_civilian_*": {
             "filename"              : "monstertruck.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "v1202_boat_capstone_corvette_*": {
             "filename"              : "corvette.ogg",
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         }
     },
     
@@ -77,33 +84,39 @@ module.exports = {
         "helicopter": {
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "plane": {
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "car": {
-            "startAtRandomPosition" : false,
+            "startAtRandomPosition" : true,
             "synchronization"       : true,
-            "maxDurationForSync"    : 2930
+            "maxDurationForSync"    : 2930,
+            "parts"                 : [0, 1629.619] // "car.ogg" is too big. It was splitted on parts. Second part ("car_1.ogg") starts on 1629.619 second
         },
         "bike": {
-            "startAtRandomPosition" : false,
+            "startAtRandomPosition" : true,
             "synchronization"       : true,
-            "maxDurationForSync"    : 1741
+            "maxDurationForSync"    : 1741,
+            "parts"                 : [0]
         },
         "boat": {
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "maxDurationForSync"    : 0
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
         "wingsuit": {
             "startAtRandomPosition" : false,
             "synchronization"       : false,
-            "duration"              : 487, // If you want to enable `startAtRandomPosition`, you must to check "wingsuit.ogg", calculate duration and fill it.
-            "maxDurationForSync"    : 0
+            "duration"              : 487, // If you want to enable `startAtRandomPosition`, you have to check "wingsuit.ogg", calculate duration and fill it.
+            "maxDurationForSync"    : 0,
+            "parts"                 : [0]
         },
     },
     
