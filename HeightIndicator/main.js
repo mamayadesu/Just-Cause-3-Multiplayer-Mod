@@ -15,11 +15,11 @@ function findMyVehicle(vehicle) {
 jcmp.events.AddRemoteCallable("HeightIndicator_OnReturnPlayerStateBits", (player, playerStateBits1, playerStateBits2) => {
     if((playerStateBits1 == 1 || playerStateBits1 == 9) && playerStateBits2 == 0 && ! player.__HEIGHTINDICATOR__doesUseWingsuit) {
         player.__HEIGHTINDICATOR__doesUseWingsuit = true;
-        jcmp.events.CallRemote("HeightIndicator_WingsuitOpened");
+        jcmp.events.CallRemote("HeightIndicator_WingsuitOpened", player);
     }
     if(((playerStateBits1 != 1 && playerStateBits1 != 9) || playerStateBits2 != 0) && player.__HEIGHTINDICATOR__doesUseWingsuit == true) {
         player.__HEIGHTINDICATOR__doesUseWingsuit = false;
-        jcmp.events.CallRemote('HeightIndicator_WingsuitClosed');
+        jcmp.events.CallRemote('HeightIndicator_WingsuitClosed', player);
     }
 });
 
