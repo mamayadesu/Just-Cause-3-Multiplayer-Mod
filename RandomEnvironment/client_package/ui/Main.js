@@ -26,15 +26,7 @@ function Main() {
                 main.ctrlPressed = true;
             }
             if(e.which == 36 && main.ctrlPressed) {
-                if(main.time.bottom < 74) {
-                    main.time.bottom += 10;
-                    main.time.left += 10;
-                } else {
-                    main.time.bottom = 4;
-                    main.time.left = 10;
-                }
-                main.time.style.bottom = main.time.bottom+"px";
-                main.time.style.left = main.time.left+"px";
+                main.toggleDeadZone();
             }
         }
         
@@ -43,6 +35,37 @@ function Main() {
                 main.ctrlPressed = false;
             }
         }
+        window.mdg = new MDGamepad();
+        mdg.on("buttondown", function(args) {
+            if(args.button == 10) {
+                mdg.Lpressed = true;
+            }
+            if(! mdg.Lpressed) {
+                return;
+            }
+            if(args.button == 4) {
+                window.__MAIN.toggleDeadZone();
+            }
+        });
+        
+        mdg.on("buttonup", function(args) {
+            if(args.button == 10) {
+                mdg.Lpressed = false;
+            }
+        });
+    }
+    
+    this.toggleDeadZone = function() {
+        var main = window.__MAIN;
+        if(main.time.bottom < 74) {
+            main.time.bottom += 10;
+            main.time.left += 10;
+        } else {
+            main.time.bottom = 4;
+            main.time.left = 10;
+        }
+        main.time.style.bottom = main.time.bottom+"px";
+        main.time.style.left = main.time.left+"px";
     }
     
     this.setTime = function(hour, minute) {
