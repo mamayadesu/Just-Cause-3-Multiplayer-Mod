@@ -22,7 +22,10 @@ function Main() {
         this.time.left = 10;
         document.onkeydown = function(e) {
             var main = window.__MAIN;
-            if(e.which == 16) {
+            if(e.which == 17) {
+                main.ctrlPressed = true;
+            }
+            if(e.which == 36 && main.ctrlPressed) {
                 if(main.time.bottom < 74) {
                     main.time.bottom += 10;
                     main.time.left += 10;
@@ -32,6 +35,12 @@ function Main() {
                 }
                 main.time.style.bottom = main.time.bottom+"px";
                 main.time.style.left = main.time.left+"px";
+            }
+        }
+        
+        document.onkeyup = function(e) {
+            if(e.which == 17) {
+                main.ctrlPressed = false;
             }
         }
     }
