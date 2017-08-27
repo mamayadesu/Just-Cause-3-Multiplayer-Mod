@@ -31,6 +31,7 @@ function Main() {
         }
         
         document.onkeyup = function(e) {
+            var main = window.__MAIN;
             if(e.which == 17) {
                 main.ctrlPressed = false;
             }
