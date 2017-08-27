@@ -6,6 +6,14 @@ jcmp.events.AddRemoteCallable("RandomEnvironment_SetTime", (hour, minute) => {
     jcmp.ui.CallEvent('RandomEnvironment_SetTime', hour, minute);
 });
 
+jcmp.events.AddRemoteCallable("RandomEnvironment_HideTime", () => {
+    jcmp.ui.CallEvent('RandomEnvironment_HideTimeEl');
+});
+
+jcmp.events.AddRemoteCallable("RandomEnvironment_ShowTime", () => {
+    jcmp.ui.CallEvent('RandomEnvironment_ShowTimeEl');
+});
+
 jcmp.events.AddRemoteCallable('RandomEnvironment_SetWeather', weather => {
     jcmp.world.weather = weather;
 });
